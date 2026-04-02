@@ -133,8 +133,8 @@
         </button>
       </div>
       <div class="display">
-        <div class="equation">50,896 + 20,000</div>
-        <div class="result">70,896</div>
+        <div class="equation"></div>
+        <div class="result"></div>
       </div>
       <div class="keypad">
         <button>hyp</button>
@@ -175,4 +175,41 @@
       </div>
     </div>
   </body>
+  <script>
+  const result = document.querySelector(".result");
+  const equation = document.querySelector(".equation");
+  const buttons = document.querySelectorAll("button");
+
+  let exp = "";
+
+  buttons.forEach(btn => {
+    btn.onclick = () => {
+      let val = btn.innerText;
+
+      if (val === "AC") {
+        exp = "";
+        result.innerText = "0";
+        equation.innerText = "";
+      } 
+      else if (val === "DEL") {
+        exp = exp.slice(0, -1);
+        equation.innerText = exp;
+      } 
+      else if (val === "=") {
+        try {
+          let res = eval(exp.replace("×","*").replace("÷","/"));
+          result.innerText = res;
+          equation.innerText = exp;
+          exp = res.toString();
+        } catch {
+          result.innerText = "Error";
+        }
+      } 
+      else {
+        exp += val;
+        equation.innerText = exp;
+      }
+    };
+  });
+  </script>
 </html>
